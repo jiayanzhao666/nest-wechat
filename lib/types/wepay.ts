@@ -1,9 +1,4 @@
-
-/**
- * 微信支付下单数据结构
- * WePay Transaction Order Data
- */
-export interface TransactionOrder {
+export interface AppTransactionOrder {
   /**
    * 应用ID
    * 长度32
@@ -46,10 +41,9 @@ export interface TransactionOrder {
    * 长度32
    */
   goods_tag?: string;
-
   /**
    * 电子发票入口开放标识
-   * 传入true时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效。 
+   * 传入true时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效。
    */
   support_fapiao?: boolean;
   /**
@@ -59,23 +53,16 @@ export interface TransactionOrder {
     /**
      * 总金额，单位：分
      */
-    total: number
+    total: number;
     /**
      * 货币类型，如：CNY
      * 长度16
      */
-    currency: 'CNY',
+    currency: 'CNY';
   };
   /**
-   * 支付者
+   * 优惠功能
    */
-  payer: {
-    /**
-     * OPENID
-     * 长度128
-     */
-    openid: string;
-  }
   detail?: {
     /**
      * 订单原价
@@ -162,9 +149,174 @@ export interface TransactionOrder {
      * 是否指定分账
      */
     profit_sharing?: boolean;
-  }
+  };
 }
 
+/**
+ * 微信支付下单数据结构
+ * WePay Transaction Order Data
+ */
+export interface TransactionOrder {
+  /**
+   * 应用ID
+   * 长度32
+   */
+  appid: string;
+  /**
+   * 直连商户号
+   * 长度32
+   */
+  mchid: string;
+  /**
+   * 商品描述
+   * 长度127
+   */
+  description: string;
+  /**
+   * 商户订单号
+   * 长度32
+   */
+  out_trade_no: string;
+  /**
+   * 交易结束时间
+   * yyyy-MM-DDTHH:mm:ss+TIMEZONE
+   * 例如：2015-05-20T13:29:35+08:00表示，北京时间2015年5月20日 13点29分35秒
+   * 长度64
+   */
+  time_expire?: string;
+  /**
+   * 附加数据
+   * 长度128
+   */
+  attach?: string;
+  /**
+   * 通知地址
+   * 长度256
+   */
+  notify_url: string;
+  /**
+   * 订单优惠标记
+   * 长度32
+   */
+  goods_tag?: string;
+
+  /**
+   * 电子发票入口开放标识
+   * 传入true时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效。
+   */
+  support_fapiao?: boolean;
+  /**
+   * 订单金额
+   */
+  amount: {
+    /**
+     * 总金额，单位：分
+     */
+    total: number;
+    /**
+     * 货币类型，如：CNY
+     * 长度16
+     */
+    currency: 'CNY';
+  };
+  /**
+   * 支付者
+   */
+  payer: {
+    /**
+     * OPENID
+     * 长度128
+     */
+    openid: string;
+  };
+  detail?: {
+    /**
+     * 订单原价
+     */
+    cost_price?: number;
+
+    /**
+     * 商品小票ID
+     * 长度32
+     */
+    invoice_id?: string;
+    goods_detail?: {
+      /**
+       * 商户侧商品编码
+       * 长度32
+       */
+      merchant_goods_id: string;
+      /**
+       * 微信支付商品编码
+       * 长度32
+       */
+      wechatpay_goods_id?: string;
+      /**
+       * 商品名称
+       * 长度256
+       */
+      goods_name?: string;
+      /**
+       * 商品数量
+       * 长度32
+       */
+      quantity: number;
+      /**
+       * 商品单价，单位分
+       */
+      unit_price: number;
+    }[];
+  };
+  /**
+   * 场景信息
+   */
+  scene_info?: {
+    /**
+     * 用户终端IP
+     * 长度45
+     */
+    payer_client_ip: string;
+    /**
+     * 商户端设备号
+     * 长度32
+     */
+    device_id?: string;
+    /**
+     * 商户门店信息
+     */
+    store_info?: {
+      /**
+       * 门店编号
+       * 长度32
+       */
+      id: string;
+      /**
+       * 门店名称
+       * 长度256
+       */
+      name?: string;
+      /**
+       * 地区编码
+       * 长度32
+       */
+      area_code?: string;
+      /**
+       * 详细地址
+       * 长度512
+       */
+      address?: string;
+    };
+  };
+  /**
+   * 结算信息
+   */
+  settle_info?: {
+    /**
+     * 是否指定分账
+     */
+    profit_sharing?: boolean;
+  };
+}
 
 /**
  * 小程序调起支付请求参数
@@ -183,17 +335,53 @@ export interface MiniProgramPayRequest {
    * prepay_id=wx201410272009395522657a690389285100
    */
   package: string;
-  signType: 'RSA',
+  signType: 'RSA';
   /**
    * 签名，长度512
    */
   paySign: string;
 }
 
+/**
+ * APP调起支付请求参数
+ */
+export interface AppPayRequest {
+  /**
+   * 微信开放平台审核通过的移动应用AppID ，为二级商户申请的应用AppID。
+   */
+  appid: string;
+  /**
+   * 微信支付分配的商户号，为微信支付商户号（mch_id）
+   */
+  partnerid: string;
+  /**
+   * 微信返回的支付交易会话ID，该值有效期为2小时。
+   */
+  prepayid: string;
+
+  /**
+   * 暂填写固定值Sign=WXPay
+   */
+  package: string;
+
+  /**
+   * 随机字符串，不长于32位。推荐随机数生成算法。
+   */
+  noncestr: string;
+  /**
+   * 时间戳，标准北京时间，时区为东八区，自1970年1月1日 0点0分0秒以来的秒数。注意：部分系统取到的值为毫秒级，需要转换成秒(10位数字)。
+   */
+  timestamp: string;
+  /**
+   * 签名，使用字段AppID、timeStamp、nonceStr、prepayid计算得出的签名值 注意：取值RSA格式
+   */
+  sign: string;
+}
+
 export interface JSAPIPayRequest extends MiniProgramPayRequest {
   /**
    * 商户申请的公众号对应的AppID，由微信支付生成，可在公众号后台查看
-   * 
+   *
    * 服务商模式时，若下单时传了sub_appid，可为sub_appid的值
    */
   appId: string;
@@ -216,12 +404,11 @@ export interface MiniProgramPaymentParameters {
    * prepay_id=wx201410272009395522657a690389285100
    */
   package: string;
-  signType: 'RSA',
+  signType: 'RSA';
   /**
    * 签名，长度512
    */
   paySign: string;
-
 }
 
 /**
@@ -230,8 +417,8 @@ export interface MiniProgramPaymentParameters {
 export interface CallbackBody {
   id: string;
   create_time: string;
-  resource_type: 'encrypt-resource',
-  event_type: 'TRANSACTION.SUCCESS' | 'REFUND.SUCCESS' | string,
+  resource_type: 'encrypt-resource';
+  event_type: 'TRANSACTION.SUCCESS' | 'REFUND.SUCCESS' | string;
   summary: string;
   resource: CallbackResource;
 }
@@ -454,7 +641,7 @@ export interface TradeGood {
    */
   discount_amount: number;
   /**
-   * 商品备注信息 
+   * 商品备注信息
    */
   goods_remark?: string;
 }
@@ -676,7 +863,6 @@ export interface RefundResult {
      */
     goods_detail?: RefundGoodDetail[];
   }[];
-
 }
 
 /**
@@ -736,7 +922,7 @@ export enum RefundChannel {
    */
   ORIGINAL = 'ORIGINAL',
   /**
-   * 退回到余额 
+   * 退回到余额
    */
   BALANCE = 'BALANCE',
   /**
@@ -746,7 +932,7 @@ export enum RefundChannel {
   /**
    * 原银行卡异常退到其他银行卡
    */
-  OTHER_BANKCARD = 'OTHER_BANKCARD'
+  OTHER_BANKCARD = 'OTHER_BANKCARD',
 }
 
 export interface RefundNotifyResult {
@@ -769,7 +955,11 @@ export interface RefundNotifyResult {
 /**
  * 回调签名请求头
  */
-export type SignatureHeaderKeys = 'Wechatpay-Signature' | 'Wechatpay-Serial' | 'Wechatpay-Timestamp' | 'Wechatpay-Nonce';
+export type SignatureHeaderKeys =
+  | 'Wechatpay-Signature'
+  | 'Wechatpay-Serial'
+  | 'Wechatpay-Timestamp'
+  | 'Wechatpay-Nonce';
 /**
  * 回调签名请求头兼容小写
  */
@@ -780,7 +970,7 @@ export type LowercaseSignatureHeaderKeys = Lowercase<SignatureHeaderKeys>;
  */
 export type SignatureHeaders = {
   [Property in SignatureHeaderKeys | LowercaseSignatureHeaderKeys]: string;
-}
+};
 
 /** 电子发票 **/
 
@@ -854,7 +1044,12 @@ export interface UserTitleEntity {
   email?: string;
 }
 
-export type TAX_PREFER_MARK = 'NO_FAVORABLE' | 'OUTSIDE_VAT' | 'VAT_EXEMPT' | 'NORMAL_ZERO_RATED' | 'EXPORT_ZERO_RATED';
+export type TAX_PREFER_MARK =
+  | 'NO_FAVORABLE'
+  | 'OUTSIDE_VAT'
+  | 'VAT_EXEMPT'
+  | 'NORMAL_ZERO_RATED'
+  | 'EXPORT_ZERO_RATED';
 export type FAPIAO_SCENE = 'WITH_WECHATPAY' | 'WITHOUT_WECHATPAY';
 
 export interface IssueItem {
@@ -885,15 +1080,15 @@ export interface IssueItem {
   quantity: number;
   /** 【单行金额合计】 单行金额和税费的和，折扣行的金额为负数，非折扣行的金额为正数，单位:分 */
   total_amount: number;
-  /** 
+  /**
    * 税率】 税率，单位为万分之一，如1300代表13%。
    * 若使用在电子发票商户平台配置的商品类型进行开票时，无需传该参数。可从接口【获取商户可开具的商品和服务税收分类编码对照表】获得商户已配置的商品信息，请确认配置信息是否正确。
    * 现在支持的税率为0、1%、1.5%、3%、5%、6%、9%、10%、11%、13%、16%、17%
    */
   tax_rate?: number;
   /**
-   * 【税收优惠政策标识】 若使用在电子发票商户平台配置的商品类型进行开票时，无需传该参数。可从接口【获取商户可开具的商品和服务税收分类编码对照表】获得商户已配置的商品信息，请确认配置信息是否正确。若该行为折扣行，则不设置可选取值： 
-   * 
+   * 【税收优惠政策标识】 若使用在电子发票商户平台配置的商品类型进行开票时，无需传该参数。可从接口【获取商户可开具的商品和服务税收分类编码对照表】获得商户已配置的商品信息，请确认配置信息是否正确。若该行为折扣行，则不设置可选取值：
+   *
    * + NO_FAVORABLE: 无优惠
    * + OUTSIDE_VAT: 不征税
    * + VAT_EXEMPT: 免税
@@ -967,7 +1162,11 @@ export interface CardInfo {
   card_openid: string;
   card_id?: string;
   card_code?: string;
-  card_status: 'INSERT_ACCEPTED' | 'INSERTED' | 'DISCARD_ACCEPTED' | 'DISCARDED';
+  card_status:
+    | 'INSERT_ACCEPTED'
+    | 'INSERTED'
+    | 'DISCARD_ACCEPTED'
+    | 'DISCARDED';
 }
 
 export interface FapiaoInfo {
@@ -1032,14 +1231,22 @@ export interface RedPackData {
    * 发放红包使用场景，红包金额大于200或者小于1元时必传
    * PRODUCT_1:商品促销
    * PRODUCT_2:抽奖
-   * PRODUCT_3:虚拟物品兑奖 
+   * PRODUCT_3:虚拟物品兑奖
    * PRODUCT_4:企业内部福利
    * PRODUCT_5:渠道分润
    * PRODUCT_6:保险回馈
    * PRODUCT_7:彩票派奖
    * PRODUCT_8:税务刮奖
    */
-  sceneId: 'PRODUCT_1' | 'PRODUCT_2' | 'PRODUCT_3' | 'PRODUCT_4' | 'PRODUCT_5' | 'PRODUCT_6' | 'PRODUCT_7' | 'PRODUCT_8';
+  sceneId:
+    | 'PRODUCT_1'
+    | 'PRODUCT_2'
+    | 'PRODUCT_3'
+    | 'PRODUCT_4'
+    | 'PRODUCT_5'
+    | 'PRODUCT_6'
+    | 'PRODUCT_7'
+    | 'PRODUCT_8';
   riskInfo?: string;
 }
 
