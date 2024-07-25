@@ -50,7 +50,7 @@ export class WePayService {
 
   private readonly logger = new Logger(WePayService.name);
 
-  constructor(private readonly debug = false) {}
+  constructor (private readonly debug = false) {}
 
   /**
    * 获取平台证书列表
@@ -61,7 +61,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/wechatpay5_1.shtml
    */
-  async getPlatformCertificates(
+  async getPlatformCertificates (
     mchId: string,
     serialNo: string,
     privateKey: Buffer | string,
@@ -111,7 +111,7 @@ export class WePayService {
    * @param privateKey 私钥
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_2_1.shtml
    */
-  async app(
+  async app (
     order: AppTransactionOrder,
     serialNo: string,
     privateKey: Buffer | string,
@@ -147,7 +147,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_1.shtml
    */
-  async jsapi(
+  async jsapi (
     order: TransactionOrder,
     serialNo: string,
     privateKey: Buffer | string,
@@ -183,7 +183,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/partner-jsons/partner-jsapi-prepay.html
    */
-  async jsapiOfPartner(
+  async jsapiOfPartner (
     order: TransactionOrderOfPartner,
     serialNo: string,
     privateKey: Buffer | string,
@@ -211,7 +211,7 @@ export class WePayService {
     });
   }
 
-  private async h5() {
+  private async h5 () {
     // H5下单
     // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_3_1.shtml
     // https://api.mch.weixin.qq.com/v3/pay/transactions/h5
@@ -226,7 +226,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/merchant/apis/jsapi-payment/query-by-wx-trade-no.html
    */
-  async getTransactionById(
+  async getTransactionById (
     id: string,
     mchId: string,
     serialNo: string,
@@ -264,7 +264,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/query-by-wx-trade-no.html
    */
-  async getTransactionByIdOfPartner(
+  async getTransactionByIdOfPartner (
     id: string,
     spMchId: string,
     subMchid: string,
@@ -302,7 +302,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/merchant/apis/jsapi-payment/query-by-out-trade-no.html
    */
-  async getTransactionByOutTradeNo(
+  async getTransactionByOutTradeNo (
     outTradeNo: string,
     mchId: string,
     serialNo: string,
@@ -339,7 +339,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/query-by-out-trade-no.html
    */
-  async getTransactionByOutTradeNoOfPartner(
+  async getTransactionByOutTradeNoOfPartner (
     outTradeNo: string,
     spMchId: string,
     subMchid: string,
@@ -377,7 +377,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_3.shtml
    */
-  async close(
+  async close (
     outTradeNo: string,
     mchId: string,
     serialNo: string,
@@ -417,7 +417,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/close-order.html
    */
-  async closeOfPartner(
+  async closeOfPartner (
     outTradeNo: string,
     spMchId: string,
     subMchId: string,
@@ -458,7 +458,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_9.shtml
    */
-  async refund(
+  async refund (
     refund: RequireOnlyOne<RefundParameters, 'transaction_id' | 'out_trade_no'>,
     mchId: string,
     serialNo: string,
@@ -496,7 +496,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/create.html
    */
-  async refundOfPartner(
+  async refundOfPartner (
     refund: RequireOnlyOne<
       RefundParametersOfPartner,
       'transaction_id' | 'out_trade_no'
@@ -537,7 +537,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_10.shtml
    */
-  async getRefund(
+  async getRefund (
     outRefundNo: string,
     mchId: string,
     serialNo: string,
@@ -575,7 +575,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/query-by-out-refund-no.html
    */
-  async getRefundOfPartner(
+  async getRefundOfPartner (
     outRefundNo: string,
     spMchId: string,
     subMchId: string,
@@ -604,14 +604,14 @@ export class WePayService {
     });
   }
 
-  private async getTradeBill() {
+  private async getTradeBill () {
     // 申请交易账单
     // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_6.shtml
     // https://api.mch.weixin.qq.com/v3/bill/tradebill
     // get
   }
 
-  private async getFlowBill() {
+  private async getFlowBill () {
     // 申请资金账单
     // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_7.shtml
     // https://api.mch.weixin.qq.com/v3/bill/fundflowbill
@@ -627,7 +627,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_5.shtml
    */
-  async paidCallback(
+  async paidCallback (
     certs: Map<string, string>,
     apiKey: string,
     req: Request,
@@ -713,7 +713,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/fapiao-merchant/update-development-config.html
    */
-  async fapiaoDevConfig(
+  async fapiaoDevConfig (
     data: DevelopmentConfigRequest,
     mchId: string,
     serialNo: string,
@@ -746,7 +746,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/fapiao-merchant/query-development-config.html
    */
-  async getFapiaoDevConfig(
+  async getFapiaoDevConfig (
     mchId: string,
     serialNo: string,
     privateKey: Buffer | string,
@@ -777,7 +777,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/partner/apis/fapiao/fapiao-merchant/update-development-config.html
    */
-  async fapiaoDevConfigOfPartner(
+  async fapiaoDevConfigOfPartner (
     data: DevelopmentConfigRequestOfPartner,
     spMchId: string,
     serialNo: string,
@@ -810,7 +810,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/partner/apis/fapiao/fapiao-merchant/query-development-config.html
    */
-  async getFapiaoDevConfigOfPartner(
+  async getFapiaoDevConfigOfPartner (
     spMchId: string,
     subMchId: string,
     serialNo: string,
@@ -842,7 +842,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/fapiao-card-template/create-fapiao-card-template.html
    */
-  async createCardTemplate(
+  async createCardTemplate (
     data: CreateCardTemplateRequest,
     mchId: string,
     serialNo: string,
@@ -874,7 +874,7 @@ export class WePayService {
    * 微信发票通知
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/fapiao-card-template/user-invoice-rise-write-notice.html
    */
-  async fapiaoCallback(
+  async fapiaoCallback (
     certs: Map<string, string>,
     apiKey: string,
     req: Request,
@@ -892,7 +892,7 @@ export class WePayService {
    * 服务商微信发票通知
    * @link https://pay.weixin.qq.com/docs/partner/apis/fapiao/fapiao-card-template/user-invoice-rise-write-notice.html
    */
-  async fapiaoCallbackOfPartner(
+  async fapiaoCallbackOfPartner (
     certs: Map<string, string>,
     apiKey: string,
     req: Request,
@@ -911,7 +911,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/user-title/get-user-title.html
    */
-  async getUserTitle(
+  async getUserTitle (
     params: GetUserTitleParams,
     mchId: string,
     serialNo: string,
@@ -943,7 +943,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/fapiao-applications/issue-fapiao-applications.html
    */
-  async issueFapiao(
+  async issueFapiao (
     data: IssueFapiaoRequest,
     mchId: string,
     serialNo: string,
@@ -975,7 +975,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/fapiao-applications/get-fapiao-applications.html
    */
-  async getIssueFapiao(
+  async getIssueFapiao (
     fapiaoApplyId: string,
     fapiaoId: string | null | undefined,
     mchId: string,
@@ -1010,7 +1010,7 @@ export class WePayService {
    *
    * @link https://pay.weixin.qq.com/docs/merchant/apis/fapiao/fapiao-applications/reverse-fapiao-applications.html
    */
-  async reverseFapiao(
+  async reverseFapiao (
     fapiaoApplyId: string,
     data: ReverseFapiaoRequest,
     mchId: string,
@@ -1051,7 +1051,7 @@ export class WePayService {
    * @returns
    * @link https://wechatpay-api.gitbook.io/wechatpay-api-v3/qian-ming-zhi-nan-1/min-gan-xin-xi-jia-mi
    */
-  rsaDecryptOAEP(cipherText: string, privateKey: Buffer | string) {
+  rsaDecryptOAEP (cipherText: string, privateKey: Buffer | string) {
     return crypto.privateDecrypt(
       {
         key: privateKey,
@@ -1071,7 +1071,7 @@ export class WePayService {
    * @returns
    * @link https://wechatpay-api.gitbook.io/wechatpay-api-v3/qian-ming-zhi-nan-1/min-gan-xin-xi-jia-mi
    */
-  rsaEncryptOAEP(text: string, publicKey: Buffer | string) {
+  rsaEncryptOAEP (text: string, publicKey: Buffer | string) {
     return crypto.publicEncrypt(
       {
         key: publicKey,
@@ -1093,7 +1093,7 @@ export class WePayService {
    * @returns
    * @tutorial https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_11.shtml
    */
-  async refundedCallback(
+  async refundedCallback (
     certs: Map<string, string>,
     apiKey: string,
     req: Request,
@@ -1119,7 +1119,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/refund-result-notice.html
    */
-  async refundedCallbackOfPartner(
+  async refundedCallbackOfPartner (
     certs: Map<string, string>,
     apiKey: string,
     req: Request,
@@ -1142,7 +1142,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/docs/partner/apis/partner-jsapi-payment/payment-notice.html
    */
-  async paidCallbackOfPartner(
+  async paidCallbackOfPartner (
     certs: Map<string, string>,
     apiKey: string,
     req: Request,
@@ -1156,7 +1156,7 @@ export class WePayService {
     ) as unknown as Promise<TradeOfPartner>;
   }
 
-  async callbackHandlerForExpress<T>(
+  async callbackHandlerForExpress<T> (
     certs: Map<string, string>,
     apiKey: string,
     req: Request,
@@ -1188,7 +1188,7 @@ export class WePayService {
     return { result, callbackBody };
   }
 
-  async callbackHandler<T>(
+  async callbackHandler<T> (
     certs: Map<string, string>,
     apiKey: string,
     headers: SignatureHeaders,
@@ -1230,7 +1230,7 @@ export class WePayService {
     };
   }
 
-  getCallbackSignatureParameters(headers: SignatureHeaders) {
+  getCallbackSignatureParameters (headers: SignatureHeaders) {
     const signature =
       headers['Wechatpay-Signature'] || headers['wechatpay-signature'];
     const platformSerial =
@@ -1262,7 +1262,7 @@ export class WePayService {
    * @returns XML字符串
    * @link https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
    */
-  async sendRedPack(
+  async sendRedPack (
     redPack: RedPackData,
     appId: string,
     mchId: string,
@@ -1353,7 +1353,7 @@ export class WePayService {
    * @returns XML字符串
    * @link https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
    */
-  async sendGroupRedPack(
+  async sendGroupRedPack (
     redPack: GroupRedPackData,
     appId: string,
     mchId: string,
@@ -1372,7 +1372,7 @@ export class WePayService {
     );
   }
 
-  async getHbInfo(
+  async getHbInfo (
     billNO: string,
     appId: string,
     mchId: string,
@@ -1439,7 +1439,7 @@ export class WePayService {
    * @returns
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay4_2.shtml
    */
-  private decryptCipherText<T>(
+  private decryptCipherText<T> (
     apiKey: string,
     cipher: string,
     associatedData: string,
@@ -1470,7 +1470,7 @@ export class WePayService {
    * @param signature
    * @returns
    */
-  private verifySignature(
+  private verifySignature (
     publicKey: Buffer | string,
     timestamp: string,
     nonce: string,
@@ -1494,7 +1494,7 @@ export class WePayService {
    * @returns MiniProgramPaymentParameters
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_4.shtml
    */
-  buildMiniProgramPayment(
+  buildMiniProgramPayment (
     appId: string,
     prepayId: string,
     privateKey: Buffer | string,
@@ -1524,7 +1524,7 @@ export class WePayService {
    * @returns MiniProgramPaymentParameters
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_2_4.shtml
    */
-  buildAppPayment(
+  buildAppPayment (
     appId: string,
     mchId: string,
     prepayId: string,
@@ -1558,7 +1558,7 @@ export class WePayService {
    * @returns MiniProgramPaymentParameters
    * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_4.shtml
    */
-  buildJSAPIParameters(
+  buildJSAPIParameters (
     appId: string,
     prepayId: string,
     privateKey: Buffer | string,
@@ -1589,7 +1589,7 @@ export class WePayService {
    * @param signature
    * @returns
    */
-  private generateHeader(
+  private generateHeader (
     mchId: string,
     nonceStr: string,
     timestamp: number,
@@ -1610,7 +1610,7 @@ export class WePayService {
    * @param body
    * @returns
    */
-  private generateSignature(
+  private generateSignature (
     method: 'GET' | 'POST' | 'PATCH',
     url: string,
     timestamp: number,
@@ -1639,7 +1639,7 @@ export class WePayService {
    * @param publicKey
    * @returns
    */
-  getCertificateSn(publicKey: Buffer | string): string {
+  getCertificateSn (publicKey: Buffer | string): string {
     return forge.pki
       .certificateFromPem(publicKey.toString())
       .serialNumber.toUpperCase();
